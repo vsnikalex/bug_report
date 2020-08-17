@@ -31,4 +31,4 @@ Steps to reproduce the behavior:
 3. Send tickets with different phoneNumber values to see the result
 
 **Reproducer**  
-Please fill a reproducer for debugging purpose.
+See [Github repository](https://github.com/vsnikalex/bug_report) with code for details.
