@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TroubleTicket
+
+paths:
+  /v1/troubleTicket:
+    post:
+      operationId: createTroubleTicket
+      summary: Creates a TroubleTicket to add a new resource or delete an existing resource
+      description: This operation creates a TroubleTicket entity
+      tags:
+        - troubleTicket
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/TroubleTicket'
+        description: The TroubleTicket to be created
+        required: true
+      responses:
+        202:
+          description: Accepted
+
+components:
+  schemas:
+    TroubleTicket:
+      allOf:
+        - type: object
+          required:
+            - customerContact
+            - '@type'
+          properties:
+            customerContact:
+              $ref: '#/components/schemas/Individual_Input'
+            '@type':
+              type: string
+              enum:
+                - TroubleTicket
+    Individual_Input:
+      allOf:
+        - type: object
+          required:
+            - contactMedium
+            - '@type'
+          properties:
+            title:
+              type: string
+            contactMedium:
+              type: array
+              items:
+                $ref: '#/components/schemas/ContactMedium'
+              minItems: 1
+              maxItems: 1
+            '@type':
+              type: string
+              enum:
+                - Individual_Input
+    Individual:
+      allOf:
+        - type: object
+          required:
+            - contactMedium
+            - '@type'
+          properties:
+            contactMedium:
+              type: array
+              items:
+                $ref: '#/components/schemas/ContactMedium'
+              minItems: 1
+              maxItems: 1
+            '@type':
+              type: string
+              enum:
+                - Individual
+    ContactMedium:
+      required:
+        - mediumType
+        - characteristic
+      properties:
+        mediumType:
+          type: string
+          enum:
+            - phone
+        characteristic:
+          $ref: '#/components/schemas/MediumCharacteristic'
+    MediumCharacteristic:
+      properties:
+        phoneNumber:
+          type: string
+          maximum: 30
+          pattern: ^([1-9][0-9]{4,20})|(0[1-9][0-9]{2,18})$
